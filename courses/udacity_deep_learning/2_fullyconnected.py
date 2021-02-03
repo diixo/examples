@@ -47,6 +47,7 @@ print('Test set', test_dataset.shape, test_labels.shape)
 # Subset the training data for faster turnaround.
 train_subset = 20000
 
+
 graph = tf.Graph()
 with graph.as_default():
     # Input data.
@@ -61,18 +62,32 @@ with graph.as_default():
     # These are the parameters that we are going to be training. The weight
     # matrix will be initialized using random values following a (truncated)
     # normal distribution. The biases get initialized to zero.
-    weights = tf.Variable(
+    WEIGHTS = tf.Variable(
         tf.truncated_normal([image_size * image_size, num_labels]))
-    biases = tf.Variable(tf.zeros([num_labels]))
+    BIASES = tf.Variable(tf.zeros([num_labels]))
+
+    #HIDDEN_WEIGHTS = tf.Variable(tf.truncated_normal([image_size * image_size, HIDDEN_NODES]))
+    #HIDDEN_BIASES = tf.Variable(tf.zeros([HIDDEN_NODES]))
+
+    """
+        Compute the logits WX + b and then apply D(S(WX + b), L) on them for the hidden layer
+        The relu is applied on the hidden layer nodes only
+    """
+    #TRAIN_HIDDEN_RELU = tf.nn.relu(tf.matmul(tf_train_dataset, HIDDEN_WEIGHTS) + HIDDEN_BIASES)
+    #VALID_HIDDEN_RELU = tf.nn.relu(tf.matmul(tf_valid_dataset, HIDDEN_WEIGHTS) + HIDDEN_BIASES)
+    #TEST_HIDDEN_RELU  = tf.nn.relu(tf.matmul(tf_test_dataset, HIDDEN_WEIGHTS) + HIDDEN_BIASES)
 
     # Training computation.
     # We multiply the inputs with the weight matrix, and add biases. We compute
     # the softmax and cross-entropy (it's one operation in TensorFlow, because
     # it's very common, and it can be optimized). We take the average of this
     # cross-entropy across all training examples: that's our loss.
-    logits = tf.matmul(tf_train_dataset, weights) + biases
+    TRAIN_LOGITS = tf.matmul(tf_train_dataset, WEIGHTS) + BIASES
+    VALID_LOGITS = tf.matmul(tf_valid_dataset, WEIGHTS) + BIASES
+    TEST_LOGITS  = tf.matmul(tf_test_dataset, WEIGHTS) + BIASES
+
     loss = tf.reduce_mean(
-        tf.nn.softmax_cross_entropy_with_logits_v2(labels=tf_train_labels, logits=logits))
+        tf.nn.softmax_cross_entropy_with_logits_v2(labels=tf_train_labels, logits=TRAIN_LOGITS))
 
     # Optimizer.
     # We are going to find the minimum of this loss using gradient descent.
@@ -81,12 +96,10 @@ with graph.as_default():
     # Predictions for the training, validation, and test data.
     # These are not part of training, but merely here so that we can report
     # accuracy figures as we train.
-    train_prediction = tf.nn.softmax(logits)
+    train_prediction = tf.nn.softmax(TRAIN_LOGITS)
 
-    valid_prediction = tf.nn.softmax(
-        tf.matmul(tf_valid_dataset, weights) + biases)
-    test_prediction = tf.nn.softmax(
-        tf.matmul(tf_test_dataset, weights) + biases)
+    valid_prediction = tf.nn.softmax(VALID_LOGITS)
+    test_prediction = tf.nn.softmax(TEST_LOGITS)
 
 num_steps = 10001
 
