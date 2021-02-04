@@ -92,7 +92,6 @@ with graph.as_default():
     # Optimizer.
     # We are going to find the minimum of this loss using gradient descent.
     optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
-    #optimizer = tf.train.AdamOptimizer(learning_rate=0.02).minimize(loss)
 
     # Predictions for the training, validation, and test data.
     # These are not part of training, but merely here so that we can report
