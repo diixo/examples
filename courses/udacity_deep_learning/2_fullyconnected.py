@@ -66,16 +66,6 @@ with graph.as_default():
         tf.truncated_normal([image_size * image_size, num_labels]))
     BIASES = tf.Variable(tf.zeros([num_labels]))
 
-    #HIDDEN_WEIGHTS = tf.Variable(tf.truncated_normal([image_size * image_size, HIDDEN_NODES]))
-    #HIDDEN_BIASES = tf.Variable(tf.zeros([HIDDEN_NODES]))
-
-    """
-        Compute the logits WX + b and then apply D(S(WX + b), L) on them for the hidden layer
-        The relu is applied on the hidden layer nodes only
-    """
-    #TRAIN_HIDDEN_RELU = tf.nn.relu(tf.matmul(tf_train_dataset, HIDDEN_WEIGHTS) + HIDDEN_BIASES)
-    #VALID_HIDDEN_RELU = tf.nn.relu(tf.matmul(tf_valid_dataset, HIDDEN_WEIGHTS) + HIDDEN_BIASES)
-    #TEST_HIDDEN_RELU  = tf.nn.relu(tf.matmul(tf_test_dataset, HIDDEN_WEIGHTS) + HIDDEN_BIASES)
 
     # Training computation.
     # We multiply the inputs with the weight matrix, and add biases. We compute
@@ -128,7 +118,8 @@ with tf.Session(graph=graph) as session:
       print('Validation accuracy: %.1f%%' % accuracy(
         valid_prediction.eval(), valid_labels))
 
-  print('Test accuracy: %.1f%%' % accuracy(test_prediction.eval(), test_labels))
+    if (step % 1000 == 0):
+      print('Test accuracy: %.1f%%' % accuracy(test_prediction.eval(), test_labels))
 
 ################################################################################
 #Loss at step 10000: 0.530961
