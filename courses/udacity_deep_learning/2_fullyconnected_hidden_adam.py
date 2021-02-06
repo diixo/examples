@@ -102,7 +102,7 @@ with graph.as_default():
     valid_prediction = tf.nn.softmax(VALID_LOGITS)
     test_prediction = tf.nn.softmax(TEST_LOGITS)
 
-num_steps = 1001
+num_steps = 501
 
 def accuracy(predictions, labels):
   return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))
