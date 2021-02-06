@@ -92,7 +92,7 @@ with graph.as_default():
     # Optimizer.
     # We are going to find the minimum of this loss using gradient descent.
     #optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
-    optimizer = tf.train.AdamOptimizer(learning_rate=0.01).minimize(loss)
+    optimizer = tf.train.AdamOptimizer(learning_rate=0.02).minimize(loss)
 
     # Predictions for the training, validation, and test data.
     # These are not part of training, but merely here so that we can report
@@ -102,7 +102,7 @@ with graph.as_default():
     valid_prediction = tf.nn.softmax(VALID_LOGITS)
     test_prediction = tf.nn.softmax(TEST_LOGITS)
 
-num_steps = 3001
+num_steps = 1001
 
 def accuracy(predictions, labels):
   return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))
@@ -133,8 +133,8 @@ with tf.Session(graph=graph) as session:
       print('Test accuracy: %.1f%%' % accuracy(test_prediction.eval(), test_labels))
 
 ################################################################################
-#learning_rate=0.01
-#Loss at step 3000: 0.143230
-#Training accuracy: 99.7%
-#Validation accuracy: 83.3%
-#Test accuracy: 90.3%
+#learning_rate=0.02
+#Loss at step 1000: 0.080025
+#Training accuracy: 99.5%
+#Validation accuracy: 85.0%
+#Test accuracy: 91.2%
