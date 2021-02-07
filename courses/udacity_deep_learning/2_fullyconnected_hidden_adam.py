@@ -135,8 +135,3 @@ with tf.Session(graph=graph) as session:
       print('Test accuracy: %.1f%%' % accuracy(test_prediction.eval(), test_labels))
 
 ################################################################################
-#learning_rate=0.02
-#Loss at step 1000: 0.080025
-#Training accuracy: 99.5%
-#Validation accuracy: 85.0%
-#Test accuracy: 91.2%
