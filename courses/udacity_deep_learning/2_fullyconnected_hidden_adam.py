@@ -48,6 +48,9 @@ print('Test set', test_dataset.shape, test_labels.shape)
 train_subset = 20000
 
 HIDDEN_NODES = 1024
+LEARNING_RATE = 0.002
+
+print('LearningRate:', LEARNING_RATE)
 
 graph = tf.Graph()
 with graph.as_default():
@@ -63,10 +66,10 @@ with graph.as_default():
     # These are the parameters that we are going to be training. The weight
     # matrix will be initialized using random values following a (truncated)
     # normal distribution. The biases get initialized to zero.
-    WEIGHTS = tf.Variable(tf.truncated_normal([HIDDEN_NODES, num_labels]))
+    WEIGHTS = tf.Variable(tf.truncated_normal([HIDDEN_NODES, num_labels], stddev=0.04))
     BIASES = tf.Variable(tf.zeros([num_labels]))
 
-    HIDDEN_WEIGHTS = tf.Variable(tf.truncated_normal([image_size * image_size, HIDDEN_NODES]))
+    HIDDEN_WEIGHTS = tf.Variable(tf.truncated_normal([image_size * image_size, HIDDEN_NODES], stddev=0.04))
     HIDDEN_BIASES = tf.Variable(tf.zeros([HIDDEN_NODES]))
 
     """
@@ -91,8 +94,7 @@ with graph.as_default():
 
     # Optimizer.
     # We are going to find the minimum of this loss using gradient descent.
-    #optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
-    optimizer = tf.train.AdamOptimizer(learning_rate=0.02).minimize(loss)
+    optimizer = tf.train.AdamOptimizer(learning_rate=LEARNING_RATE).minimize(loss)
 
     # Predictions for the training, validation, and test data.
     # These are not part of training, but merely here so that we can report
