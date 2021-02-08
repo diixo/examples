@@ -66,10 +66,10 @@ with graph.as_default():
     # These are the parameters that we are going to be training. The weight
     # matrix will be initialized using random values following a (truncated)
     # normal distribution. The biases get initialized to zero.
-    WEIGHTS = tf.Variable(tf.truncated_normal([HIDDEN_NODES, num_labels], stddev=0.04))
+    WEIGHTS = tf.Variable(tf.truncated_normal([HIDDEN_NODES, num_labels], stddev=0.05))
     BIASES = tf.Variable(tf.zeros([num_labels]))
 
-    HIDDEN_WEIGHTS = tf.Variable(tf.truncated_normal([image_size * image_size, HIDDEN_NODES], stddev=0.04))
+    HIDDEN_WEIGHTS = tf.Variable(tf.truncated_normal([image_size * image_size, HIDDEN_NODES], stddev=0.05))
     HIDDEN_BIASES = tf.Variable(tf.zeros([HIDDEN_NODES]))
 
     """
