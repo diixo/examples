@@ -48,7 +48,7 @@ print('Test set', test_dataset.shape, test_labels.shape)
 train_subset = 20000
 
 HIDDEN_NODES = 1024
-LEARNING_RATE = 0.002
+LEARNING_RATE = 0.0005
 
 print('LearningRate:', LEARNING_RATE)
 
